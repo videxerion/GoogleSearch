@@ -20,11 +20,12 @@ class document_module():
             link = linksList[i]
             name_file = link[link.rfind('/') + 1:]
             file_download = requests.get(link)
+            if file_download.status_code == 200:
 
-            print(f'[#] get {name_file} file...')
+                print(f'[#] get {name_file} file...')
 
-            file = open(f'search_files/{name_file}', 'wb')
-            file.write(file_download.content)
-            file.close()
+                file = open(f'search_files/{name_file}', 'wb')
+                file.write(file_download.content)
+                file.close()
 
 #  Copyright (c) 2021 videxerion
