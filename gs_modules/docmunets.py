@@ -11,6 +11,7 @@ class document_module():
             arr = google.search(f'site:{site} filetype:{extensions[i]}')
             for g in range(len(arr)):
                 return_arr.append(arr[g])
+            print(f'[#] search {extensions[i]} done...')
         return return_arr
 
 #  Copyright (c) 2021 videxerion
