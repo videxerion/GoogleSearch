@@ -18,7 +18,7 @@ class google_module():
         g = 0
         return_array = []
         while True:
-            time.sleep(0.5)
+            time.sleep(1)
             html = self.session.get(f'https://www.google.com/search?q={request}&start={g}0')
             soup = BeautifulSoup(html.text, 'html.parser')
             links_not_clean = soup.find_all('div', {'class': 'kCrYT'})
