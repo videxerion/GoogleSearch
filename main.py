@@ -3,11 +3,15 @@ from gs_modules.docmunets import *
 from gs_modules.extensions import get_extensions
 from gs_modules.url import get_url
 from gs_modules.metadata import metadata_module
+from gs_modules.checks import integrity_check
 from colorama import init
 from colorama import Fore, Back, Style
 
 init(autoreset=True)
 import os
+
+if not integrity_check():
+    exit(-1)
 
 documents = document_module()
 metadata = metadata_module()
