@@ -1,5 +1,6 @@
 from colorama import init
 from colorama import Fore, Back, Style
+from gs_modules.url import get_url
 import os
 
 init(autoreset=True)
@@ -22,6 +23,7 @@ def integrity_check():
     try:
         file = open('search_files/test', 'w')
         file.close()
+        os.remove('search_files/test')
     except:
         print(Fore.RED + '!!!ERROR!!!\nВнимание отсутсвует директория search_files. Попробую её создать...')
         try:
@@ -30,4 +32,10 @@ def integrity_check():
         except:
             print(Fore.RED + 'Внимание, не удалось создать директорию\nВозможно не хватает прав')
         return False
+    try:
+        get_url()
+    except:
+        print(Fore.RED + 'Внимание, ошибка при прочтении файла url.txt\nВозможно не хватает прав или файл пуст')
+        return False
+
     return True
