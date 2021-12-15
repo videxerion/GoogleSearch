@@ -1,5 +1,8 @@
 from gs_modules.google import *
 import requests
+from colorama import init
+from colorama import Fore, Back, Style
+init(autoreset=True)
 
 google = google_module()
 
@@ -12,7 +15,7 @@ class document_module():
             arr = google.search(f'site:{site} filetype:{extensions[i]}')
             for g in range(len(arr)):
                 return_arr.append(arr[g])
-            print(f'[#] search {extensions[i]} done...')
+            print(Fore.LIGHTYELLOW_EX + f'[#] search {extensions[i]} done...')
         return return_arr
 
     def get_files(self, linksList):
@@ -22,7 +25,7 @@ class document_module():
             file_download = requests.get(link)
             if file_download.status_code == 200:
 
-                print(f'[#] get {name_file} file...')
+                print(Fore.LIGHTYELLOW_EX + f'[#] get {name_file} file...')
 
                 file = open(f'search_files/{name_file}', 'wb')
                 file.write(file_download.content)

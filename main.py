@@ -3,6 +3,10 @@ from gs_modules.docmunets import *
 from gs_modules.extensions import get_extensions
 from gs_modules.url import get_url
 from gs_modules.metadata import metadata_module
+from colorama import init
+from colorama import Fore, Back, Style
+
+init(autoreset=True)
 import os
 
 documents = document_module()
@@ -22,19 +26,19 @@ meta = metadata.get_meta_data()
 
 print('\n\n[-] --------------------------------- ФАЙЛЫ --------------------------------- [-]')
 for i in range(len(array)):
-    print(f'[+] {array[i]}')
+    print(Fore.LIGHTGREEN_EX + f'[+] {array[i]}')
 print('[-] ------------------------------------------------------------------------- [-]')
 
 print('\n\n[-] ------------------------------ МЕТА ДАННЫЕ ------------------------------ [-]')
 for i in range(len(meta)):
-    print('[-]')
+    print(Fore.LIGHTRED_EX + '[-]')
     array_meta = meta[i]
     file_name = array_meta[0]
     meta_dict = array_meta[1]
     meta_keys = list(meta_dict.keys())
-    print(f'[+] {file_name}')
+    print(Fore.LIGHTGREEN_EX + f'[+] {file_name}')
     for g in range(len(meta_keys)):
-        print(f'[#] {meta_keys[g]}: {meta_dict[meta_keys[g]]}')
+        print(Fore.LIGHTYELLOW_EX + f'[#] {meta_keys[g]}: {meta_dict[meta_keys[g]]}')
 print('[-] ------------------------------------------------------------------------- [-]')
 
 #  Copyright (c) 2021 videxerion

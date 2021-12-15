@@ -3,6 +3,11 @@ import zipfile
 import xmltodict
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
+from colorama import init
+from colorama import Fore, Back, Style
+
+init(autoreset=True)
+
 
 class metadata_module():
     def get_meta_data(self):
@@ -10,7 +15,7 @@ class metadata_module():
         return_array = []
         for i in range(len(fileList)):
             file_name = fileList[i]
-            #print(f'get metadata {file_name}...')
+            print(Fore.LIGHTYELLOW_EX + f'[#] get metadata {file_name}...')
             if file_name.endswith('pdf'):
                 pdf_file = open(f'search_files/{file_name}', 'rb')
                 pdf_data = PDFParser(pdf_file)
@@ -28,10 +33,10 @@ class metadata_module():
                             pass
                     if value != '':
                         value_dict.update({keys_array[h]: value})
-                    return_array.append([file_name, value_dict])
+                return_array.append([file_name, value_dict])
             elif file_name.endswith('docx'):
                 dict_for_return = {}
-                docx_file = zipfile.ZipFile(f'search_files/{file_name}','r')
+                docx_file = zipfile.ZipFile(f'search_files/{file_name}', 'r')
                 core_file_xml = docx_file.read('docProps/core.xml')
                 docx_file.close()
                 core_file_dic = xmltodict.parse(core_file_xml, encoding='utf-8')
@@ -39,9 +44,8 @@ class metadata_module():
                 for g in range(len(keys_core_file_dict)):
                     value = core_file_dic["cp:coreProperties"][keys_core_file_dict[g]]
                     key = keys_core_file_dict[g]
-                    if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[0] != 'h':
+                    if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[
+                        0] != 'h':
                         dict_for_return.update({f'{key[key.find(":") + 1:]}': f'{value}'})
                 return_array.append([file_name, dict_for_return])
         return return_array
-
-
