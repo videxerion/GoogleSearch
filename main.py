@@ -3,15 +3,22 @@ from gs_modules.docmunets import *
 from gs_modules.extensions import get_extensions
 from gs_modules.url import get_url
 from gs_modules.metadata import metadata_module
-from gs_modules.checks import integrity_check
+from gs_modules.checks import integrity_check, check_to_empty_folder
 from colorama import init
 from colorama import Fore, Back, Style
+import os
 
 init(autoreset=True)
-import os
 
 if not integrity_check():
     exit(-1)
+
+if not check_to_empty_folder('search_files'):
+    clear_choise = input(Fore.LIGHTRED_EX + 'Внимание!\nДиректория с файлами не пуста, удалить содержимое? [Y/N]\n')
+    if clear_choise.lower() in ['yes', 'y', 'ye']:
+        file_list = os.listdir('search_files')
+        for i in range(len(file_list)):
+            os.remove(f'search_files/{file_list[i]}')
 
 documents = document_module()
 metadata = metadata_module()

@@ -39,3 +39,11 @@ def integrity_check():
         return False
 
     return True
+
+
+def check_to_empty_folder(name_folder):
+    files = os.listdir(name_folder)
+    if not files:
+        return True
+    else:
+        return False
