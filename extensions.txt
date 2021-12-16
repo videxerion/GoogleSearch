@@ -17,3 +17,4 @@ zip
 png
 jpeg
 tar
+bak

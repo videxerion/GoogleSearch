@@ -22,13 +22,16 @@ class document_module():
         for i in range(len(linksList)):
             link = linksList[i]
             name_file = link[link.rfind('/') + 1:]
-            file_download = requests.get(link)
-            if file_download.status_code == 200:
+            try:
+                file_download = requests.get(link)
+                if file_download.status_code == 200:
 
-                print(Fore.LIGHTYELLOW_EX + f'[#] get {name_file} file...')
+                    print(Fore.LIGHTYELLOW_EX + f'[#] get {name_file} file...')
 
-                file = open(f'search_files/{name_file}', 'wb')
-                file.write(file_download.content)
-                file.close()
+                    file = open(f'search_files/{name_file}', 'wb')
+                    file.write(file_download.content)
+                    file.close()
+            except:
+                print(Fore.RED + f'[-] ошибка при получении файла {name_file}')
 
 #  Copyright (c) 2021 videxerion
