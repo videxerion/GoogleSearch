@@ -15,7 +15,7 @@ def integrity_check():
         try:
             file = open('url.txt', 'w')
             file.close()
-            print(Fore.GREEN + 'Файл успешно создан! Просто перезапустите программу')
+            print(Fore.GREEN + 'Файл успешно создан! Добавьте нужные Вам ссылки в url.txt. Просто перезапустите программу')
         except:
             print(Fore.RED + 'Внимание, не удалось создать url.txt!\nВозможно не хватает прав')
         return False
