@@ -1,7 +1,7 @@
 from gs_modules.google import *
 import requests
 from colorama import init
-from colorama import Fore, Back, Style
+from colorama import Fore
 init(autoreset=True)
 
 google = google_module()

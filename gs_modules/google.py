@@ -23,7 +23,7 @@ class google_module():
         g = 0
         return_array = []
         while True:
-            time.sleep(1)
+            #time.sleep(0.5)
             html = self.session.get(f'https://www.google.com/search?q={request}&start={g}0', headers=self.headres)
             if html.status_code == 429:
                 raise GoogleBan

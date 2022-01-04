@@ -4,7 +4,7 @@ import xmltodict
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from colorama import init
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 init(autoreset=True)
 
@@ -45,15 +45,16 @@ class metadata_module():
                     if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[0] != 'h':
                         dict_for_return.update({f'{key[key.find(":") + 1:]}': f'{value}'})
 
-                app_file_xml = docx_file.read('docProps/app.xml')
-                docx_file.close()
-                app_file_dic = xmltodict.parse(app_file_xml, encoding='utf-8')
-                keys_app_file_dict = list(app_file_dic['Properties'].keys())
-                for g in range(len(keys_app_file_dict)):
-                    value = app_file_dic["Properties"][keys_app_file_dict[g]]
-                    key = keys_app_file_dict[g]
-                    if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[0] != 'h':
-                        dict_for_return.update({f'{key[key.find(":") + 1:]}': f'{value}'})
-
-                return_array.append([file_name, dict_for_return])
+                    app_file_xml = docx_file.read('docProps/app.xml')
+                    docx_file.close()
+                    app_file_dic = xmltodict.parse(app_file_xml, encoding='utf-8')
+                    keys_app_file_dict = list(app_file_dic['Properties'].keys())
+                    for g in range(len(keys_app_file_dict)):
+                        value = app_file_dic["Properties"][keys_app_file_dict[g]]
+                        key = keys_app_file_dict[g]
+                        if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[0] != 'h':
+                            dict_for_return.update({f'{key[key.find(":") + 1:]}': f'{value}'})
+                    return_array.append([file_name, dict_for_return])
+            except:
+                print(Fore.RED + f'[-] ошибка при получении метаданных файла {file_name}')
         return return_array
