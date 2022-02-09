@@ -1,3 +1,7 @@
+#  Copyright (c) 2021-2022 videxerion
+#  Source code: https://github.com/videxerion/GoogleSearch
+
+
 from gs_modules.logo import print_logo
 from gs_modules.docmunets import *
 from gs_modules.extensions import get_extensions
@@ -13,7 +17,10 @@ flags, arguments = parse_argv(sys.argv)
 flags_names = list(flags.keys())
 
 if flags == {} or len(arguments) == 0 or '--help' in flags_names:
-    print('python main.py {url} {flags}\n\t--documents or -doc -- поиск документов в гугле связанных с сайтом\n\t--download or -down -- скачать найденные документы\n\t--metadata or -meta -- достать мета данные полученных файлов')
+    print('python main.py {url} {flags}' \
+        '\n\t--documents or -doc -- поиск документов в гугле связанных с сайтом' \ 
+        '\n\t--download or -down -- скачать найденные документы' \
+        '\n\t--metadata or -meta -- достать мета данные полученных файлов')
     exit(0)
 
 
@@ -29,6 +36,7 @@ if not check_to_empty_folder('search_files'):
         for i in range(len(file_list)):
             os.remove(f'search_files/{file_list[i]}')
 
+
 documents = document_module()
 metadata = metadata_module()
 
@@ -38,6 +46,7 @@ extensions = get_extensions()
 os.system('clear')
 print_logo()
 
+
 if '--documents' in flags_names or '-doc' in flags_names:
     array = documents.search_documents_site(site, extensions=extensions)
     if '--download' in flags_names or '-down' in flags_names:
@@ -45,14 +54,17 @@ if '--documents' in flags_names or '-doc' in flags_names:
 if '--metadata' in flags_names or '-meta' in flags_names:
     meta = metadata.get_meta_data()
 
+
 os.system('clear')
 print_logo()
+
 
 if '--documents' in flags_names or '-doc' in flags_names:
     print('\n\n[-] --------------------------------- ФАЙЛЫ --------------------------------- [-]')
     for i in range(len(array)):
         print(Fore.LIGHTGREEN_EX + f'[+] {array[i]}')
     print('[-] ------------------------------------------------------------------------- [-]')
+
 if '--metadata' in flags_names or '-meta' in flags_names:
     print('\n\n[-] ------------------------------ МЕТА ДАННЫЕ ------------------------------ [-]')
     for i in range(len(meta)):
@@ -66,4 +78,4 @@ if '--metadata' in flags_names or '-meta' in flags_names:
             print(Fore.LIGHTYELLOW_EX + f'[#] {meta_keys[g]}: {meta_dict[meta_keys[g]]}')
     print('[-] ------------------------------------------------------------------------- [-]')
 
-#  Copyright (c) 2021 videxerion
+
