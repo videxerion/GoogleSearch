@@ -18,7 +18,7 @@ class document_module():
             print(Fore.LIGHTYELLOW_EX + f'[#] search {extensions[i]} done...')
         return return_arr
 
-    def get_files(self, linksList):
+    def get_files(self, linksList, path):
         for i in range(len(linksList)):
             link = linksList[i]
             name_file = link[link.rfind('/') + 1:]
@@ -28,10 +28,11 @@ class document_module():
 
                     print(Fore.LIGHTYELLOW_EX + f'[#] get {name_file} file...')
 
-                    file = open(f'search_files/{name_file}', 'wb')
+                    file = open(f'{path}/{name_file}', 'wb')
                     file.write(file_download.content)
                     file.close()
-            except:
+            except Exception as err:
                 print(Fore.RED + f'[-] ошибка при получении файла {name_file}')
+                print(Fore.RED + f'[-] {err}')
 
 #  Copyright (c) 2021 videxerion
