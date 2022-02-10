@@ -8,11 +8,6 @@ from colorama import Fore
 
 init(autoreset=True)
 
-class GoogleBan(Exception):
-    def __init__(self):
-        self.txt = 'Ban in google'
-
-
 class google_module():
     def __init__(self):
         self.session = requests.session()
@@ -27,7 +22,6 @@ class google_module():
         g = 0
         return_array = []
         while True:
-            #time.sleep(0.5)
             html = self.session.get(f'https://www.google.com/search?q={request}&start={g}0', headers=self.headres)
             if html.status_code == 429:
                 for i in range(600):
