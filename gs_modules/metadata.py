@@ -56,6 +56,7 @@ class metadata_module():
                         if value is not None and str(type(value)) != "<class 'collections.OrderedDict'>" and value[0] != 'h':
                             dict_for_return.update({f'{key[key.find(":") + 1:]}': f'{value}'})
                     return_array.append([file_name, dict_for_return])
-            except:
+            except Exception as err:
                 print(Fore.RED + f'[-] ошибка при получении метаданных файла {file_name}')
+                print(Fore.RED + f'[-] {err}')
         return return_array
