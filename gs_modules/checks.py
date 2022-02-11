@@ -15,6 +15,12 @@ def check_to_avalible_directory(path):
         print(Fore.RED + f'[-] {err}')
         return False
 
+def check_extensions(extensions):
+    if len(extensions) == 0:
+        return False
+    else:
+        return extensions.split(',')
+
 def check_to_empty_folder(name_folder):
     files = os.listdir(name_folder)
     if not files:
