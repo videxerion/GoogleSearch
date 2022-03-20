@@ -39,13 +39,13 @@ if flags == {} or len(arguments) == 0 or '--help' in flags_names:
           '\n\t--download or -down {path to folder} -- скачать найденные документы в указанную директорию',
           '\n\t--metadata or -meta -- достать мета данные полученных файлов')
     exit(0)
-elif '--documents' not in flags_names or '-doc' not in flags_names:
+elif '--documents' not in flags_names and '-doc' not in flags_names:
     print('Отсутствует флаг --documents')
     exit(0)
-elif '--download' not in flags_names or '-down' not in flags_names:
+elif '--download' not in flags_names and '-down' not in flags_names:
     print('Отсутствует флаг --download')
     exit(0)
-elif '--metadata' not in flags_names or '-meta' not in flags_names:
+elif '--metadata' not in flags_names and '-meta' not in flags_names:
     print('Отсутствует флаг --metadata')
     exit(0)
 
