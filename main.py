@@ -4,7 +4,6 @@
 
 from gs_modules.logo import print_logo
 from gs_modules.docmunets import *
-from gs_modules.extensions import get_extensions
 from gs_modules.argvParse import parse_argv
 from gs_modules.metadata import metadata_module
 from gs_modules.checks import check_to_avalible_directory, check_to_empty_folder, check_extensions
@@ -34,35 +33,43 @@ try:
 except:
     pass
 
-site = arguments[0]
 if flags == {} or len(arguments) == 0 or '--help' in flags_names:
     print('python main.py {url} {flags}',
           '\n\t--documents or -doc {extensions} -- поиск файлов с определенными расширениями',
           '\n\t--download or -down {path to folder} -- скачать найденные документы в указанную директорию',
           '\n\t--metadata or -meta -- достать мета данные полученных файлов')
     exit(0)
-
+elif '--documents' not in flags_names or '-doc' not in flags_names:
+    print('Отсутствует флаг --documents')
+    exit(0)
+elif '--download' not in flags_names or '-down' not in flags_names:
+    print('Отсутствует флаг --download')
+    exit(0)
+elif '--metadata' not in flags_names or '-meta' not in flags_names:
+    print('Отсутствует флаг --metadata')
+    exit(0)
 
 
 documents = document_module()
 metadata = metadata_module()
+site = arguments[0]
 
-if '--documents' in flags_names or '-doc' in flags_names:
-    array = documents.search_documents_site(site, extensions=extensions)
-    if '--download' in flags_names or '-down' in flags_names:
-        if check_to_avalible_directory(path):
-            if not check_to_empty_folder(path):
-                clear_choise = input(
-                    Fore.LIGHTRED_EX + 'Внимание!\nДиректория с файлами не пуста, удалить содержимое? [Y/N]\n')
-                if clear_choise.lower() in ['yes', 'y', 'ye']:
-                    file_list = os.listdir(f'{path}')
-                    for i in range(len(file_list)):
-                        os.remove(f'{path}/{file_list[i]}')
-        else:
-            exit(-1)
-        documents.get_files(array, path)
-        if '--metadata' in flags_names or '-meta' in flags_names:
-            meta = metadata.get_meta_data(path)
+
+array = documents.search_documents_site(site, extensions=extensions)
+
+if check_to_avalible_directory(path):
+    if not check_to_empty_folder(path):
+        clear_choise = input(
+            Fore.LIGHTRED_EX + 'Внимание!\nДиректория с файлами не пуста, удалить содержимое? [Y/N]\n')
+        if clear_choise.lower() in ['yes', 'y', 'ye']:
+            file_list = os.listdir(f'{path}')
+            for i in range(len(file_list)):
+                os.remove(f'{path}/{file_list[i]}')
+else:
+    exit(-1)
+documents.get_files(array, path)
+
+meta = metadata.get_meta_data(path)
 
 
 os.system('clear')
