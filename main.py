@@ -61,8 +61,8 @@ if '--documents' in flags_names or '-doc' in flags_names:
         else:
             exit(-1)
         documents.get_files(array, path)
-if '--metadata' in flags_names or '-meta' in flags_names:
-    meta = metadata.get_meta_data()
+        if '--metadata' in flags_names or '-meta' in flags_names:
+            meta = metadata.get_meta_data(path)
 
 
 os.system('clear')

@@ -10,15 +10,15 @@ init(autoreset=True)
 
 
 class metadata_module():
-    def get_meta_data(self):
-        fileList = os.listdir('search_files/')
+    def get_meta_data(self, path):
+        fileList = os.listdir(f'{path}/')
         return_array = []
         for i in range(len(fileList)):
             file_name = fileList[i]
             print(Fore.LIGHTYELLOW_EX + f'[#] get metadata {file_name}...')
             try:
                 if file_name.endswith('pdf'):
-                    pdf_file = open(f'search_files/{file_name}', 'rb')
+                    pdf_file = open(f'{path}/{file_name}', 'rb')
                     pdf_data = PDFParser(pdf_file)
                     doc = PDFDocument(parser=pdf_data)
                     metadata_dict = doc.info[0]
@@ -36,7 +36,7 @@ class metadata_module():
                     return_array.append([file_name, value_dict])
                 elif file_name.endswith('docx') or file_name.endswith('pptx'):
                     dict_for_return = {}
-                    docx_file = zipfile.ZipFile(f'search_files/{file_name}', 'r')
+                    docx_file = zipfile.ZipFile(f'{path}/{file_name}', 'r')
                     core_file_xml = docx_file.read('docProps/core.xml')
                     core_file_dic = xmltodict.parse(core_file_xml, encoding='utf-8')
                     keys_core_file_dict = list(core_file_dic['cp:coreProperties'].keys())
