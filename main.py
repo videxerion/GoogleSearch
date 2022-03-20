@@ -6,7 +6,7 @@ from gs_modules.logo import print_logo
 from gs_modules.docmunets import *
 from gs_modules.argvParse import parse_argv
 from gs_modules.metadata import metadata_module
-from gs_modules.checks import check_to_avalible_directory, check_to_empty_folder, check_extensions
+from gs_modules.checks import *
 from colorama import init
 from colorama import Fore
 import os
@@ -19,6 +19,7 @@ print_logo()
 
 flags, arguments = parse_argv(sys.argv)
 flags_names = list(flags.keys())
+
 
 try:
     path = flags['-down'] if '-down' in flags else flags['--download']
@@ -40,13 +41,13 @@ if flags == {} or len(arguments) == 0 or '--help' in flags_names:
           '\n\t--metadata or -meta -- достать мета данные полученных файлов')
     exit(0)
 elif '--documents' not in flags_names and '-doc' not in flags_names:
-    print('Отсутствует флаг --documents')
+    print(Fore.RED + '[-] ' + 'Отсутствует флаг --documents')
     exit(0)
 elif '--download' not in flags_names and '-down' not in flags_names:
-    print('Отсутствует флаг --download')
+    print(Fore.RED + '[-] ' + 'Отсутствует флаг --download')
     exit(0)
 elif '--metadata' not in flags_names and '-meta' not in flags_names:
-    print('Отсутствует флаг --metadata')
+    print(Fore.RED + '[-] ' + 'Отсутствует флаг --metadata')
     exit(0)
 
 
@@ -54,13 +55,14 @@ documents = document_module()
 metadata = metadata_module()
 site = arguments[0]
 
+if not check_to_exist_url(site):
+    exit(0)
 
 array = documents.search_documents_site(site, extensions=extensions)
 
 if check_to_avalible_directory(path):
     if not check_to_empty_folder(path):
-        clear_choise = input(
-            Fore.LIGHTRED_EX + 'Внимание!\nДиректория с файлами не пуста, удалить содержимое? [Y/N]\n')
+        clear_choise = input(Fore.LIGHTRED_EX + 'Внимание!\nДиректория с файлами не пуста, удалить содержимое? [Y/N]\n')
         if clear_choise.lower() in ['yes', 'y', 'ye']:
             file_list = os.listdir(f'{path}')
             for i in range(len(file_list)):
